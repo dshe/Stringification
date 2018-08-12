@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stringification", "Stringification\Stringification.csproj", "{307B0356-128C-4DCD-8314-D2D58C32B7EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stringification.Tests", "Stringification.Tests\Stringification.Tests.csproj", "{52D06BD1-6217-4491-8518-1F5F526A45DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{307B0356-128C-4DCD-8314-D2D58C32B7EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{307B0356-128C-4DCD-8314-D2D58C32B7EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{307B0356-128C-4DCD-8314-D2D58C32B7EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{307B0356-128C-4DCD-8314-D2D58C32B7EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52D06BD1-6217-4491-8518-1F5F526A45DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52D06BD1-6217-4491-8518-1F5F526A45DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52D06BD1-6217-4491-8518-1F5F526A45DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52D06BD1-6217-4491-8518-1F5F526A45DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BEDA1A1B-CF7B-4D7A-A0B1-0A0E86D4E18F}
+	EndGlobalSection
+EndGlobal
