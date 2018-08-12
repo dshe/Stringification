@@ -1,6 +1,6 @@
 ## Stringification&nbsp;&nbsp; [![License](https://img.shields.io/badge/license-Apache%202.0-7755BB.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Stringification is a simple utility which creates json-like string representations of objects.
+Stringification is a simple utility which creates a json-like string representation of an object.
 
 ```csharp
 public void Example()
