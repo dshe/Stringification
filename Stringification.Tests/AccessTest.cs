@@ -48,6 +48,7 @@ namespace Stringifier.Test
         [Fact]
         public void T01_Access_Default()
         {
+
             var test = new TestClass(set: false);
 
             var result = test.Stringify();
