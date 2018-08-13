@@ -1,6 +1,6 @@
 ## Stringification&nbsp;&nbsp; [![License](https://img.shields.io/badge/license-Apache%202.0-7755BB.svg)](https://opensource.org/licenses/Apache-2.0)
 ***A simple utility which creates a json-like string representation of an object***
-- contained in a **single** C# 7 source file supporting **.NET Standard 2.0**
+- supports **.NET Standard 2.0**
 - simple and intuitive API
 - no dependencies
 - tested
