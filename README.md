@@ -35,9 +35,10 @@ public void Example()
             }
         }
     };
+    
+    Write(company.Stringify());
 }
     
-Write(company.Stringify());
 ```
 ```csharp
 Company: {Name:"Gazprom", Id:9, Active:True, Location:{Address:"3 Vuy", Country:Macedonia, LastUpdate:8/13/2018 2:30:10}, People:[{Name:"Natalia", Age:18}, {Name:"Natasha", Age:81}]}
