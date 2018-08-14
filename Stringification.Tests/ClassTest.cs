@@ -66,11 +66,11 @@ namespace Stringifier.Test
             var list = new List<string> { "item2", "item1" }; // sorted
             var result1 = list.Stringify();
             Write(result1);
-            Assert.Equal("List`1: {\"item2\", \"item1\"}", result1);
+            Assert.Equal("List`1: [\"item2\", \"item1\"]", result1);
 
             var result2 = list.ToArray().Stringify(); // not sorted
             Write(result2);
-            Assert.Equal("String[]: {\"item2\", \"item1\"}", result2);
+            Assert.Equal("String[]: [\"item2\", \"item1\"]", result2);
         }
 
         [Fact]

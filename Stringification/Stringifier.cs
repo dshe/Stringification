@@ -51,17 +51,16 @@ namespace Stringification
                 .Select(Recurse)
                 .Where(x => x != null)
                 .Select(x => $"{string.Join(", ", x)}")
-                .AsString();
+                .GroupBy(x => "")
+                .Select(list => string.Join(", ", list))
+                .Select(s => "[" + s + "]")
+                .SingleOrDefault();
 
         private static string StringifyClass(this object o) =>
             Instantiator.GetNonDefaultProperties(o)
                 .Select(property => new { property, value = property.GetValue(o).Recurse() })
                 .Where(x => x.value != null)
                 .Select(x => $"{x.property.Name}:{x.value}")
-                .AsString();
-
-        private static string AsString(this IEnumerable<string> enumerable) =>
-            enumerable
                 .GroupBy(x => "")
                 .Select(list => string.Join(", ", list))
                 .Select(s => "{" + s + "}")

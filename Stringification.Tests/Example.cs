@@ -41,26 +41,27 @@ namespace Stringifier.Test
         {
             var company = new Company
             {
-                Name = "Oracle",
-                Id = 42,
+                Name = "Gazprom",
+                Id = 999,
                 Active = true,
-                Sales = 100,
+
                 Location = new Location
                 {
-                    Address = "31 Oak",
-                    Country = Country.Malawi,
+                    Address = "31 Vuetra",
+                    Country = Country.Macedonia,
                     LastUpdate = DateTime.Now
                 },
+
                 People = new List<Person>
                 {
                     new Person
                     {
-                        Name = "Bill",
+                        Name = "Natalia",
                         Age = 18
                     },
                     new Person
                     {
-                        Name = "Nester",
+                        Name = "Natasha",
                         Age = 81
                     }
                 }
