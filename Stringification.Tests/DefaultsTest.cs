@@ -16,7 +16,7 @@ namespace Stringifier.Test
         {
             public SomeEnum Some { get; set; } = SomeEnum.Undefined;
         }
-
+        
         [Fact]
         public void T08_Defaults()
         {
@@ -25,7 +25,7 @@ namespace Stringifier.Test
             Assert.Null(somethang.Stringify(includeTypeName: false));
 
             somethang.Some = SomeEnum.Yes;
-
+            
             Assert.Equal("{Some:Yes}", somethang.Stringify(includeTypeName: false));
         }
     }

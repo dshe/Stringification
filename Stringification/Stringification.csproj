@@ -9,7 +9,7 @@
     <PackageIconUrl>https://github.com/dshe.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/dshe/Stringification</PackageProjectUrl>
     <Description>Stringification is a simple utility to create string representations of objects.</Description>
-    <PackageTags>stringifier json strings</PackageTags>
+    <PackageTags>stringify stringifier json strings</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
