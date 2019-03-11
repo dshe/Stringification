@@ -10,8 +10,6 @@ namespace Stringification
     {
         public static string Stringify(this object o, bool includeTypeName = true)
         {
-            if (o == null)
-                throw new ArgumentNullException(nameof(o));
             if (o is string || o is Exception)
                 return o.ToString();
             var result = Recurse(o);
@@ -58,9 +56,9 @@ namespace Stringification
 
         private static string StringifyClass(this object o) =>
             Instantiator.GetNonDefaultProperties(o)
-                .Select(property => new { property, value = property.GetValue(o).Recurse() })
+                .Select(property => new { name = property.Name, value = property.GetValue(o).Recurse() })
                 .Where(x => x.value != null)
-                .Select(x => $"{x.property.Name}:{x.value}")
+                .Select(x => $"{x.name}:{x.value}")
                 .GroupBy(x => "")
                 .Select(list => string.Join(", ", list))
                 .Select(s => "{" + s + "}")

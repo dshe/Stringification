@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
+#nullable enable
+
 namespace Stringification
 {
     public static class Instantiator
@@ -22,7 +24,7 @@ namespace Stringification
                 .OrderBy(p => p.MetadataToken);
         }
 
-        public static object CreateInstance(this TypeInfo typeInfo)
+        public static object? CreateInstance(this TypeInfo typeInfo)
         {
             try
             {
@@ -35,7 +37,7 @@ namespace Stringification
             }
         }
 
-        private static object Instantiate(TypeInfo typeInfo)
+        private static object? Instantiate(TypeInfo typeInfo)
         {
             if (typeInfo.AsType() == typeof(string))
                 return "";

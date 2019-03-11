@@ -21,10 +21,9 @@ namespace Stringifier.Test
             Assert.Equal(DateTime.Now.ToString(), DateTime.Now.Stringify(includeTypeName: false));
         }
 
-
         public class Company
         {
-            public string Name { get; set; }
+            public string Name { get; set; } = "";
         }
 
         [Fact]
@@ -44,7 +43,7 @@ namespace Stringifier.Test
 
         public class CompanyWithCtor
         {
-            public string Name { get; set; }
+            public string? Name { get; set; }
             public CompanyWithCtor()
             {
                 Name = "some name";
@@ -84,4 +83,3 @@ namespace Stringifier.Test
         }
     }
 }
-
