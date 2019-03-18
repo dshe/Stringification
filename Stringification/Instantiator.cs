@@ -12,6 +12,9 @@ namespace Stringification
     {
         public static IEnumerable<PropertyInfo> GetNonDefaultProperties(object o)
         {
+            if (o == null)
+                throw new ArgumentNullException(nameof(o));
+
             var typeInfo = o.GetType().GetTypeInfo();
 
             // try to create an instance of the type to find it's default properties
@@ -26,6 +29,9 @@ namespace Stringification
 
         public static object? CreateInstance(this TypeInfo typeInfo)
         {
+            if (typeInfo == null)
+                throw new ArgumentNullException(nameof(typeInfo));
+
             try
             {
                 return Instantiate(typeInfo);

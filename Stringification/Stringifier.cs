@@ -10,6 +10,8 @@ namespace Stringification
     {
         public static string Stringify(this object o, bool includeTypeName = true)
         {
+            if (o == null)
+                return "";
             if (o is string || o is Exception)
                 return o.ToString();
             var result = Recurse(o);
@@ -23,7 +25,7 @@ namespace Stringification
             switch (o)
             {
                 case null:
-                    return null;
+                    return "";
                 case string s:
                     return $"\"{s}\"";
                 case ValueType v:

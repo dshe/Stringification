@@ -56,7 +56,7 @@ namespace Stringifier.Test
             var company = new CompanyWithCtor();
             company.Name = null;
             Write(company.Stringify());
-            Assert.Equal("CompanyWithCtor: {}", company.Stringify());
+            Assert.Equal("CompanyWithCtor: {Name:}", company.Stringify());
         }
 
         [Fact]
