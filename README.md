@@ -1,4 +1,8 @@
-## Stringification&nbsp;&nbsp; [![License](https://img.shields.io/badge/license-Apache%202.0-7755BB.svg)](https://opensource.org/licenses/Apache-2.0)
+## Stringification&nbsp;&nbsp;
+[![Build status](https://ci.appveyor.com/api/projects/status/45p92vlwqqgm9vb1?svg=true)](https://ci.appveyor.com/project/dshe/Stringification)
+[![NuGet](https://img.shields.io/nuget/vpre/Stringification.svg)](https://www.nuget.org/packages/Stringification/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-7755BB.svg)](https://opensource.org/licenses/Apache-2.0)
+
 ***A simple utility which creates a json-like string representation of an object***
 - supports **.NET Standard 2.0**
 - simple and intuitive API
