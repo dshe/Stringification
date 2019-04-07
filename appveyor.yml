@@ -6,7 +6,7 @@ before_build:
 after_build:
 - ps: dotnet pack -c release
 build:
-  verbosity: minimal
+  verbosity: detailed
 test_script:
 - ps: dotnet test .\Stringification.Tests\Stringification.Tests.csproj
 artifacts:
