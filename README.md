@@ -7,40 +7,17 @@
 - tested
 
 ```csharp
-public void Example()
+var company = new Company
 {
-    var company = new Company
-    {
-        Name = "Gazprom",
-        Id = 9,
-        Active = true,
+    Name = "Gazaprompter",
+    Id = 999,
+    Active = true,
+    Location = new Location("31 Vuetra", Country.Macedonia, DateTime.Now),
+    People = new List<Person>() { new Person("Natalia", 18), new Person("Natasha", 42) }
+};
 
-        Location = new Location
-        {
-            Address = "3 Vuy",
-            Country = Country.Macedonia,
-            LastUpdate = DateTime.Now
-        },
-
-        People = new List<Person>
-        {
-            new Person
-            {
-                Name = "Natalia",
-                Age = 18
-            },
-            new Person
-            {
-                Name = "Natasha",
-                Age = 81
-            }
-        }
-    };
-    
-    Write(company.Stringify());
-}
-    
+Write(company.Stringify());
 ```
 ```csharp
-Company: {Name:"Gazprom", Id:9, Active:True, Location:{Address:"3 Vuy", Country:Macedonia, LastUpdate:8/13/2018 2:30:10}, People:[{Name:"Natalia", Age:18}, {Name:"Natasha", Age:81}]}
+Company: {Name:"Gazaprompter", Id:999, Active:True, Location:{Address:"31 Vuetra", Country:Macedonia, Updated:4/7/2019 10:03:54 PM}, People:[{Name:"Natalia", Age:18}, {Name:"Natasha", Age:42}]}
 ```
