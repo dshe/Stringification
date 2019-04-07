@@ -76,10 +76,9 @@ namespace Stringification
 
             if (typeInfo.IsStringEnum())
             {
-                var method = typeInfo.BaseType.GetMethod("ToStringEnums");
-                var fields = (IList)method.Invoke(null, null);
-                int i = Rand.Next(1, fields.Count);
-                return fields[i];
+                var fields = typeInfo.DeclaredFields.ToList();
+                var i = Rand.Next(1, fields.Count);
+                return fields[i].GetValue(null);
             }
 
             if (typeof(IEnumerable).GetTypeInfo().IsAssignableFrom(typeInfo))
