@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using Stringification;
 
-namespace Stringifier.Test
+namespace TestStringifier
 {
     public class DefaultsTest
     {

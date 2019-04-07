@@ -3,7 +3,7 @@ using Xunit;
 using Xunit.Abstractions;
 using Stringification;
 
-namespace Stringifier.Test
+namespace TestStringifier
 {
     public class AccessTests
     {

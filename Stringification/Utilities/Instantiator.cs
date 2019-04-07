@@ -3,68 +3,71 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 #nullable enable
 
 namespace Stringification
 {
-    public static class Instantiator
+    public static class Utilities
     {
         public static IEnumerable<PropertyInfo> GetNonDefaultProperties(object o)
         {
             if (o == null)
                 throw new ArgumentNullException(nameof(o));
 
-            var typeInfo = o.GetType().GetTypeInfo();
+            var type = o.GetType().GetTypeInfo();
 
             // try to create an instance of the type to find it's default properties
-            var instance = typeInfo.CreateInstance();
+            var instance = CreateInstance(type);
 
-            return typeInfo
+            // find all public properties
+            return type
                 .DeclaredProperties
                 .Where(p => p.GetMethod.IsPublic)
                 .Where(p => instance == null || !Equals(p.GetValue(o), p.GetValue(instance)))
                 .OrderBy(p => p.MetadataToken);
         }
 
-        public static object? CreateInstance(this TypeInfo typeInfo)
+        public static object CreateInstance(TypeInfo type)
         {
-            if (typeInfo == null)
-                throw new ArgumentNullException(nameof(typeInfo));
-
             try
             {
-                return Instantiate(typeInfo);
+                return TryCreateInstance(type);
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"Instantiator could not instantiate type '{typeInfo.Name}'.", e);
-                return null;
+                throw new Exception($"Could not create an instance of type '{type.Name}'.", e);
             }
         }
 
-        private static object? Instantiate(TypeInfo typeInfo)
+        private static object TryCreateInstance(TypeInfo type)
         {
-            if (typeInfo.AsType() == typeof(string))
+            if (type == typeof(string))
                 return "";
 
-            if (typeInfo.IsValueType)
-                return Activator.CreateInstance(typeInfo);
+            if (type.IsValueType)
+                return Activator.CreateInstance(type, true); // ctor can be public or internal
 
             // reference types
-            var ctors = typeInfo.DeclaredConstructors.Where(c => !c.IsStatic).ToList();
+            var ctors = type.DeclaredConstructors.Where(c => !c.IsStatic).ToList();
 
             var ctor = ctors.SingleOrDefault(c => !c.GetParameters().Any());
             if (ctor != null) // ctor taking no arguments
+            {
+                Debug.WriteLine($"Creating instance of {type.Name} with parameterless constructor.");
                 return ctor.Invoke(null);
+            }
 
             ctor = ctors.SingleOrDefault(c => c.GetParameters().All(p => p.HasDefaultValue));
             if (ctor != null) // ctor taking all defaults
+            {
+                Debug.WriteLine($"Creating instance of {type.Name} with all-default parameters constructor.");
                 return ctor.Invoke(ctor.GetParameters().Select(p => p.DefaultValue).ToArray());
+            }
 
-            Debug.WriteLine($"Instantiator could not instantiate type '{typeInfo.Name}'.");
-
-            return null;
+            Debug.WriteLine($"Creating instance of {type.Name} using FormatterServices.");
+            return FormatterServices.GetUninitializedObject(type);
         }
     }
 }

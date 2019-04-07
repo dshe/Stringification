@@ -1,8 +1,11 @@
-﻿using System;
+﻿using StringEnums;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+
+#nullable enable
 
 namespace Stringification
 {
@@ -38,8 +41,12 @@ namespace Stringification
                     return enumerable.StringifyEnumerable();
             }
 
-            var type = o.GetType();
-            if (type.GetTypeInfo().IsClass)
+            var type = o.GetType().GetTypeInfo();
+
+            if (type.IsStringEnum())
+                return o.ToString();
+
+            if (type.IsClass)
                 return o.StringifyClass();
 
             throw new Exception($"Unable to stringify type: {type.Name}.");
@@ -57,7 +64,7 @@ namespace Stringification
                 .SingleOrDefault();
 
         private static string StringifyClass(this object o) =>
-            Instantiator.GetNonDefaultProperties(o)
+            Utilities.GetNonDefaultProperties(o)
                 .Select(property => new { name = property.Name, value = property.GetValue(o).Recurse() })
                 .Where(x => x.value != null)
                 .Select(x => $"{x.name}:{x.value}")

@@ -4,23 +4,34 @@ using Xunit;
 using Xunit.Abstractions;
 using Stringification;
 
-namespace Stringifier.Test
+namespace Examples
 {
-    public class StringifyExample
+    public class StringifyExamples
     {
         public enum Country { Macau, Macedonia, Malawi }
 
         public class Person
         {
-            public string? Name { get; set; }
-            public int? Age { get; set; }
+            public string Name { get; }
+            public int Age { get; }
+            public Person(string name, int age)
+            {
+                Name = name;
+                Age = age;
+            }
         }
 
         public class Location
         {
             public string? Address { get; set; }
             public Country Country { get; set; }
-            public DateTime LastUpdate { get; set; }
+            public DateTime Updated { get; set; }
+            public Location(string? address, Country country, DateTime updated)
+            {
+                Address = address;
+                Country = country;
+                Updated = updated;
+            }
         }
 
         public class Company
@@ -34,37 +45,18 @@ namespace Stringifier.Test
         }
 
         protected readonly Action<string> Write;
-        public StringifyExample(ITestOutputHelper output) => Write = output.WriteLine;
+        public StringifyExamples(ITestOutputHelper output) => Write = output.WriteLine;
 
         [Fact]
         public void T09_Example()
         {
             var company = new Company
             {
-                Name = "Gazprom",
-                Id = 999,
+                Name = "Aco",
+                Id = 9,
                 Active = true,
-
-                Location = new Location
-                {
-                    Address = "31 Vuetra",
-                    Country = Country.Macedonia,
-                    LastUpdate = DateTime.Now
-                },
-
-                People = new List<Person>
-                {
-                    new Person
-                    {
-                        Name = "Natalia",
-                        Age = 18
-                    },
-                    new Person
-                    {
-                        Name = "Natasha",
-                        Age = 81
-                    }
-                }
+                Location = new Location("3 Ruey", Country.Macedonia, DateTime.Now),
+                People = new List<Person>() { new Person("Natalia", 18), new Person("Natasha", 42) }
             };
 
             Write(company.Stringify());
