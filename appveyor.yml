@@ -5,8 +5,6 @@ before_build:
 - ps: dotnet restore
 after_build:
 - ps: dotnet pack -c release
-install:
-- nuget sources add -Name MyAccountFeed42 -Source https://ci.appveyor.com/nuget/dshe -UserName %nuget_user% -Password %nuget_password%
 build:
   verbosity: minimal
 test_script:
