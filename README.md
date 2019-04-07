@@ -3,21 +3,21 @@
 ***A simple utility which creates a json-like string representation of an object***
 - supports **.NET Standard 2.0**
 - simple and intuitive API
-- no dependencies
+- dependencies: StringEnums, Reactive Extensions, NodaTime
 - tested
 
 ```csharp
 var company = new Company
 {
-    Name = "Gazaprompter",
-    Id = 999,
+    Name = "Aco",
+    Id = 9,
     Active = true,
-    Location = new Location("31 Vuetra", Country.Macedonia, DateTime.Now),
+    Location = new Location("3 Ruey", Country.Macedonia, DateTime.Now),
     People = new List<Person>() { new Person("Natalia", 18), new Person("Natasha", 42) }
 };
 
-Write(company.Stringify());
+company.Stringify() =>
 ```
 ```csharp
-Company: {Name:"Gazaprompter", Id:999, Active:True, Location:{Address:"31 Vuetra", Country:Macedonia, Updated:4/7/2019 10:03:54 PM}, People:[{Name:"Natalia", Age:18}, {Name:"Natasha", Age:42}]}
+Company: {Name:"Aco", Id:9, Active:True, Location:{Address:"3 Ruey", Country:Macedonia, Updated:4/7/2019 10:10:20 PM}, People:[{Name:"Natalia", Age:18}, {Name:"Natasha", Age:42}]}
 ```
