@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -34,10 +33,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Stringification\Stringification.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Tests\Utilities\" />
   </ItemGroup>
 
 </Project>
