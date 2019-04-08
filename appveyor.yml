@@ -2,7 +2,8 @@ version: 1.0.{build}
 image: Visual Studio 2019 Preview
 configuration: Release
 before_build:
-- ps: dotnet restore
+- cmd: dotnet --version
+- ps: dotnet restore --verbosity diag
 after_build:
 - ps: dotnet pack -c release
 build:
