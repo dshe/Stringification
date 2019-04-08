@@ -3,14 +3,15 @@ image: Visual Studio 2019 Preview
 configuration: Release
 before_build:
 - cmd: dotnet --version
-- ps: dotnet restore --verbosity detailed
+- ps: dotnet restore --verbosity minimal
 after_build:
 - ps: dotnet pack -c release
 build:
-  verbosity: detailed
+  verbosity: minimal
 test_script:
 - ps: dotnet test .\Stringification.Tests\Stringification.Tests.csproj
 artifacts:
 - path: '**\*.nupkg'
 nuget:
   account_feed: true
+  project_feed: true
