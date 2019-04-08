@@ -1,7 +1,6 @@
 ﻿using System;
 using Xunit;
 using Xunit.Abstractions;
-using Stringification;
 
 namespace Stringifier.Test
 {
