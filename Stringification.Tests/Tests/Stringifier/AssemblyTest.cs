@@ -7,7 +7,7 @@ using Xunit;
 using Xunit.Abstractions;
 using Stringification;
 
-namespace TestStringifier
+namespace Stringification.Tests
 {
     public class AssemblyTest
     {

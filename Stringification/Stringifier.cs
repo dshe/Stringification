@@ -11,16 +11,17 @@ namespace Stringification
 {
     public static class Stringifier
     {
-        public static string Stringify(this object o, bool includeTypeName = true)
+        public static string Stringify(this object source, bool includeTypeName = true)
         {
-            if (o == null)
-                return "";
-            if (o is string || o is Exception)
-                return o.ToString();
-            var result = Recurse(o);
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            var result = Recurse(source);
+
             if (!includeTypeName)
                 return result;
-            return o.GetType().Name + ": " + (result ?? "{}");
+
+            return source.GetType().Name + ": " + (result ?? "{}");
         }
 
         private static string Recurse(this object o)

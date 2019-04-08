@@ -4,7 +4,7 @@ using Xunit;
 using Xunit.Abstractions;
 using Stringification;
 
-namespace TestStringifier
+namespace Stringification.Tests
 {
     public class ClassTests
     {
@@ -15,8 +15,8 @@ namespace TestStringifier
         public void T03_Primitives()
         {
             const string str = "somestring";
-            Assert.Equal(str, str.Stringify(includeTypeName: false));
-            Assert.Equal("A", "A".Stringify(includeTypeName: false));
+            Assert.Equal("\"" + str + "\"", str.Stringify(includeTypeName: false));
+            Assert.Equal("\"A\"", "A".Stringify(includeTypeName: false));
             Assert.Equal("42", 42.Stringify(includeTypeName: false));
             Assert.Equal(DateTime.Now.ToString(), DateTime.Now.Stringify(includeTypeName: false));
         }

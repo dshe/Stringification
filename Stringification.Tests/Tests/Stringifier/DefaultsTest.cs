@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using Stringification;
 
-namespace TestStringifier
+namespace Stringification.Tests
 {
     public class DefaultsTest
     {
@@ -18,7 +18,7 @@ namespace TestStringifier
         }
         
         [Fact]
-        public void T08_Defaults()
+        public void T0_Defaults()
         {
             var somethang = new Somethang();
 

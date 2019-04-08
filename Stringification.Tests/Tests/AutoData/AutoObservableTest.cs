@@ -5,11 +5,10 @@ using System.Reactive.Threading.Tasks;
 using System.Threading;
 using System.Threading.Tasks;
 using Stringification;
-using Stringifier.Test;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace TestAutoObservable
+namespace Stringification.Tests
 {
     public class AutoObservableTests : BaseTest
     {

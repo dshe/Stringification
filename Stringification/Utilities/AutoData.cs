@@ -24,20 +24,19 @@ namespace Stringification
     {
         private static readonly Random Rand = new Random();
 
-        public static T Create<T>() => (T)Create(typeof(T));
-
-        public static List<T> Create<T>(int count)
+        public static T Create<T>()
         {
-            var list = new List<T>();
-            for (var i = 0; i < count; i++)
-            {
-                T instance = Create<T>();
-                list.Add(instance);
-            }
-            return list;
+            var type = typeof(T);
+            var instance = Create(type);
+            if (instance == null)
+                throw new InvalidDataException($"Cannot create type '{type.Name}'.");
+            return (T) instance;
         }
 
-        public static object Create(Type type)
+        public static IList<T> Create<T>(int count) =>
+           Enumerable.Range(0, count).Select(_ => Create<T>()).ToList();
+
+        public static object? Create(Type type)
         {
             var utype = Nullable.GetUnderlyingType(type);
             if (utype != null)
@@ -46,21 +45,25 @@ namespace Stringification
             if (type == typeof(char))
                 return Guid.NewGuid().ToString("N")[0];
             if (type == typeof(string))
-                return Guid.NewGuid().ToString("N"); // 32 character hex
+                return Guid.NewGuid().ToString("N").Substring(0, 6); // 32 character hex
             if (type == typeof(bool))
                 return true;
             if (type == typeof(int))
-                return Rand.Next(100, 1000);
+                return Rand.Next(10, 100);
             if (type == typeof(long))
-                return (long)Rand.Next(1000, 10000);
+                return (long)Rand.Next(100, 1000);
             if (type == typeof(float))
-                return (float)Rand.NextDouble() * 10;
+                return (float)Math.Round(Rand.NextDouble() * 10, 2);
             if (type == typeof(double))
-                return Rand.NextDouble() * 100;
+                return Math.Round(Rand.NextDouble() * 100, 2);
             if (type == typeof(decimal))
-                return (decimal)Rand.NextDouble() * 1000;
+                return (decimal)Math.Round(Rand.NextDouble() * 1000, 2);
             if (type == typeof(DateTime))
                 return DateTime.UtcNow;
+            if (type == typeof(Instant))
+                return SystemClock.Instance.GetCurrentInstant();
+            if (type == typeof(LocalTime))
+                return SystemClock.Instance.GetCurrentInstant().InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault()).TimeOfDay;
             if (type == typeof(LocalDateTime))
                 return SystemClock.Instance.GetCurrentInstant().InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault()).LocalDateTime;
             if (type == typeof(ZonedDateTime))
@@ -84,14 +87,36 @@ namespace Stringification
             if (typeof(IEnumerable).GetTypeInfo().IsAssignableFrom(typeInfo))
             {
                 var genericTypes = typeInfo.GenericTypeArguments;
-                var listType = typeof(List<>).MakeGenericType(genericTypes).GetTypeInfo();
-                var list = Utilities.CreateInstance(listType);
-                AddItemsToList(list);
-                return list;
+                if (genericTypes.Length == 1) // list
+                {
+                    var listType = typeof(List<>).MakeGenericType(genericTypes).GetTypeInfo();
+                    var list = Utilities.CreateInstance(listType);
+                    AddItemsToList(list);
+                    return list;
+                }
+                if (genericTypes.Length ==2) // dictionary
+                {
+                    var dictType = typeof(Dictionary<,>).MakeGenericType(genericTypes).GetTypeInfo();
+                    var dict = Utilities.CreateInstance(dictType);
+                    AddItemsToDictionary(dict);
+                    return dict;
+                }
             }
 
-            if (typeInfo.IsClass)
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
             {
+                var genericTypes = type.GetGenericArguments();
+                var value1 = Create(genericTypes[0]);
+                var value2 = Create(genericTypes[1]);
+                var ctor = type.GetConstructor(genericTypes);
+                var result = ctor.Invoke(new [] { value1, value2 });
+                return result;
+            }
+
+            if (typeInfo.IsClass) // && !typeInfo.IsAbstract)
+            {
+                if (typeInfo.IsAbstract)
+                    return null;
                 var classInstance = Utilities.CreateInstance(typeInfo);
                 SetClassProperties(classInstance);
                 return classInstance;
@@ -111,11 +136,13 @@ namespace Stringification
                 var propertyValue = property.GetValue(classInstance);
                 var defaultPropertyValue = DefaultValueOfType(propertyType);
 
-                if (Equals(propertyValue, defaultPropertyValue))
+                if (propertyValue == null || Equals(propertyValue, defaultPropertyValue))
                 {
                     try
                     {
                         var value = Create(propertyType);
+                        if (value == null)
+                            continue;
                         if (property.CanWrite)
                             property.SetValue(classInstance, value, BindingFlags.CreateInstance | BindingFlags.NonPublic, null, null, CultureInfo.InvariantCulture);
                         else // search for private backing field of public property
@@ -135,7 +162,7 @@ namespace Stringification
                     if (!enumerable.GetEnumerator().MoveNext())
                         AddItemsToList(enumerable);
                 }
-                else if (propertyType.IsClass)
+                else if (propertyType.IsClass && propertyType != typeof(string))
                     SetClassProperties(propertyValue);
             }
         }
@@ -153,7 +180,29 @@ namespace Stringification
             for (var i = 0; i < 3; i++)
             {
                 var item = Create(genericTypes[0]);
+                if (item == null)
+                    return;
                 addMethod.Invoke(enumerable, new[] { item });
+            }
+        }
+
+        private static void AddItemsToDictionary(object obj)
+        {
+            var dict = (IDictionary)obj;
+            var type = dict.GetType();
+            var genericTypes = type.GenericTypeArguments;
+            var listType = typeof(Dictionary<,>).MakeGenericType(genericTypes);
+            var addMethod = listType.GetMethod("Add", genericTypes);
+            if (addMethod == null)
+                throw new Exception("Cannot find Add method.");
+            // use the Add method to add 3 items to the list
+            for (var i = 0; i < 3; i++)
+            {
+                var key = Create(genericTypes[0]);
+                var value = Create(genericTypes[1]);
+                if (key == null || value == null)
+                    return;
+                addMethod.Invoke(dict, new[] { key, value });
             }
         }
 

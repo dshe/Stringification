@@ -4,7 +4,9 @@ using Xunit;
 using Xunit.Abstractions;
 using Stringification;
 
-namespace Examples
+#nullable enable
+
+namespace Stringification.Tests
 {
     public class StringifyExamples
     {
@@ -48,7 +50,7 @@ namespace Examples
         public StringifyExamples(ITestOutputHelper output) => Write = output.WriteLine;
 
         [Fact]
-        public void T09_Example()
+        public void T01_Example()
         {
             var company = new Company
             {

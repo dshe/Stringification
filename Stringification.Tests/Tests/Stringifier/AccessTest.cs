@@ -3,9 +3,9 @@ using Xunit;
 using Xunit.Abstractions;
 using Stringification;
 
-namespace TestStringifier
+namespace Stringification.Tests
 {
-    public class AccessTests
+    public class AccessTests : BaseTest
     {
         internal class TestClass
         {
@@ -26,8 +26,7 @@ namespace TestStringifier
             public TestClass() { }
         }
 
-        protected readonly Action<string> Write;
-        public AccessTests(ITestOutputHelper output) => Write = output.WriteLine;
+        public AccessTests(ITestOutputHelper output): base(output) { }
 
         [Fact]
         public void T01_Access_Default()
@@ -36,7 +35,7 @@ namespace TestStringifier
 
             var result = test.Stringify();
             if (result != null)
-                Write(result);
+                WriteLine(result);
 
             Assert.Equal("TestClass: {}", result);
         }

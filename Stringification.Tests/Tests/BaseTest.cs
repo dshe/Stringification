@@ -2,7 +2,7 @@
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Stringifier.Test
+namespace Stringification.Tests
 {
     public abstract class BaseTest
     {
