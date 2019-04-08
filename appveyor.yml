@@ -12,5 +12,3 @@ test_script:
 - ps: dotnet test .\Stringification.Tests\Stringification.Tests.csproj
 artifacts:
 - path: '**\*.nupkg'
-nuget:
-  account_feed: true
