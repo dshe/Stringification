@@ -30,7 +30,7 @@ namespace Stringification
             var instance = Create(type);
             if (instance == null)
                 throw new InvalidDataException($"Cannot create type '{type.Name}'.");
-            return (T) instance;
+            return (T)instance;
         }
 
         public static IList<T> Create<T>(int count) =>
@@ -43,9 +43,9 @@ namespace Stringification
                 type = utype;
 
             if (type == typeof(char))
-                return Guid.NewGuid().ToString("N")[0];
+                return GetRandomString(1)[0];
             if (type == typeof(string))
-                return Guid.NewGuid().ToString("N").Substring(0, 6); // 32 character hex
+                return GetRandomString(8);
             if (type == typeof(bool))
                 return true;
             if (type == typeof(int))
@@ -94,7 +94,7 @@ namespace Stringification
                     AddItemsToList(list);
                     return list;
                 }
-                if (genericTypes.Length ==2) // dictionary
+                if (genericTypes.Length == 2) // dictionary
                 {
                     var dictType = typeof(Dictionary<,>).MakeGenericType(genericTypes).GetTypeInfo();
                     var dict = Utilities.CreateInstance(dictType);
@@ -109,11 +109,11 @@ namespace Stringification
                 var value1 = Create(genericTypes[0]);
                 var value2 = Create(genericTypes[1]);
                 var ctor = type.GetConstructor(genericTypes);
-                var result = ctor.Invoke(new [] { value1, value2 });
+                var result = ctor.Invoke(new[] { value1, value2 });
                 return result;
             }
 
-            if (typeInfo.IsClass) // && !typeInfo.IsAbstract)
+            if (typeInfo.IsClass)
             {
                 if (typeInfo.IsAbstract)
                     return null;
@@ -144,12 +144,14 @@ namespace Stringification
                         if (value == null)
                             continue;
                         if (property.CanWrite)
-                            property.SetValue(classInstance, value, BindingFlags.CreateInstance | BindingFlags.NonPublic, null, null, CultureInfo.InvariantCulture);
+                            property.SetValue(classInstance, value);
                         else // search for private backing field of public property
                         {
                             var fieldName = "<" + property.Name + ">";
-                            var field = type.DeclaredFields.Where(f => f.Name.StartsWith(fieldName)).SingleOrDefault();
-                            field.SetValue(classInstance, value, BindingFlags.CreateInstance | BindingFlags.NonPublic, null, CultureInfo.InvariantCulture);
+                            type.DeclaredFields
+                                .Where(f => f.Name.StartsWith(fieldName))
+                                .SingleOrDefault()
+                                .SetValue(classInstance, value);
                         }
                     }
                     catch (Exception e)
@@ -222,6 +224,17 @@ namespace Stringification
                 return Utilities.CreateInstance(type);
 
             return null; // reference type, unknown
+        }
+
+        private static string GetRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[length];
+
+            for (int i = 0; i < length; i++)
+                stringChars[i] = chars[Rand.Next(chars.Length)];
+
+            return new string(stringChars);
         }
     }
 }
