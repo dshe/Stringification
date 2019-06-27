@@ -26,10 +26,11 @@ namespace Stringification
 
         private static string Recurse(this object o)
         {
+            if (o == null)
+                return "";
+
             switch (o)
             {
-                case null:
-                    return "";
                 case string s:
                     return $"\"{s}\"";
                 case ValueType v:
