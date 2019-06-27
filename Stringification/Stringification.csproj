@@ -2,33 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.2.3</Version>
-    <Authors>DavidS</Authors>
-    <Company />
+    <LangVersion>8.0</LangVersion>
+    <NullableContextOptions>enable</NullableContextOptions>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageIconUrl>https://github.com/dshe.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/dshe/Stringification</PackageProjectUrl>
-    <Description>Stringification is a simple utility to create string representations of objects.</Description>
+    <PackageIconUrl>https://github.com/dshe.png</PackageIconUrl>
     <PackageTags>stringify stringifier json strings</PackageTags>
-    <AssemblyVersion>1.2.3.0</AssemblyVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>8.0</LangVersion>
-    <NullableContextOptions>enable</NullableContextOptions>
-    <NoWarn />
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <LangVersion>8.0</LangVersion>
-    <NullableContextOptions>enable</NullableContextOptions>
-    <NoWarn />
-    <WarningsAsErrors />
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DefineConstants />
+    <Description>Stringification is a simple utility to create string representations of objects.</Description>
+    <Authors>DavidS</Authors>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
