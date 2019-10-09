@@ -16,9 +16,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NodaTime" Version="2.4.5" />
-    <PackageReference Include="StringEnums" Version="1.22.0" />
-    <PackageReference Include="System.Reactive" Version="4.1.5" />
+    <PackageReference Include="NodaTime" Version="2.4.7" />
+    <PackageReference Include="StringEnums" Version="1.30.0" />
+    <PackageReference Include="System.Reactive" Version="4.1.6" />
   </ItemGroup>
 
 </Project>
