@@ -5,8 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 
-#nullable enable
-
 namespace Stringification
 {
     public static class Utilities

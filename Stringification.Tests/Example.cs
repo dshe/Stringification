@@ -4,8 +4,6 @@ using Xunit;
 using Xunit.Abstractions;
 using Stringification;
 
-#nullable enable
-
 namespace Stringification.Tests
 {
     public class StringifyExamples

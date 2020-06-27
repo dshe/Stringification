@@ -1,11 +1,8 @@
 ﻿using StringEnums;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
-#nullable enable
 
 namespace Stringification
 {
@@ -21,7 +18,7 @@ namespace Stringification
             if (!includeTypeName)
                 return result;
 
-            return source.GetType().Name + ": " + (result ?? "{}");
+            return $"{source.GetType().Name}: {result ?? "{}"}";
         }
 
         private static string Recurse(this object o)
@@ -38,7 +35,7 @@ namespace Stringification
                 case Type t:
                     return $"Type:\"{t.Name}\"";
                 case Exception e:
-                    return $"\"{e.ToString()}\"";
+                    return $"\"{e}\"";
                 case IEnumerable enumerable:
                     return enumerable.StringifyEnumerable();
             }
