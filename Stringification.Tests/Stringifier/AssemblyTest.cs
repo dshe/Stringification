@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using Xunit;
 using Xunit.Abstractions;
-using Stringification;
 
 namespace Stringification.Tests
 {

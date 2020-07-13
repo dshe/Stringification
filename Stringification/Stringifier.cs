@@ -8,7 +8,7 @@ namespace Stringification
 {
     public static class Stringifier
     {
-        public static string Stringify(this object source, bool includeTypeName = true)
+        public static string Stringify(object source, bool includeTypeName = true)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));

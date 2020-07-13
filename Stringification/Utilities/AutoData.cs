@@ -12,7 +12,6 @@ using System.Reflection;
 //   cannot set internal or private properties
 //   has a confusing API
 //   cannot create observables
-//   would add another dependency
 // (Bogus is also popular)
 
 namespace Stringification

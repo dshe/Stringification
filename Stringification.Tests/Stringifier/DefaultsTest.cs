@@ -1,5 +1,4 @@
 ﻿using Xunit;
-using Stringification;
 
 namespace Stringification.Tests
 {
