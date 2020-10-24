@@ -13,11 +13,17 @@ var company = new Company
     Id = 9,
     Active = true,
     Location = new Location("3 Ruey", Country.Macedonia, DateTime.Now),
-    People = new List<Person>() { new Person("Natalia", 18), new Person("Natasha", 42) }
+    People = new List<Person>() 
+            { new Person("Natalia", 18), new Person("Natasha", 42) }
 };
 
 company.Stringify() =>
-```
-```csharp
-Company: {Name:"Aco", Id:9, Active:True, Location:{Address:"3 Ruey", Country:Macedonia, Updated:4/7/2019 10:10:20 PM}, People:[{Name:"Natalia", Age:18}, {Name:"Natasha", Age:42}]}
+
+Company: {
+    Name:"Aco", 
+    Id:9, 
+    Active:True, 
+    Location:{Address:"3 Ruey", Country:Macedonia, Updated:4/7/2019 10:10:20 PM}, 
+    People:[{Name:"Natalia", Age:18}, {Name:"Natasha", Age:42}]
+}
 ```
