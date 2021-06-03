@@ -22,7 +22,7 @@ namespace Stringification
             // find all public properties
             return type
                 .DeclaredProperties
-                .Where(p => p.GetMethod.IsPublic)
+                .Where(p => p.GetMethod?.IsPublic == true)
                 .Where(p => instance == null || !Equals(p.GetValue(o), p.GetValue(instance)))
                 .OrderBy(p => p.MetadataToken);
         }
@@ -45,7 +45,7 @@ namespace Stringification
                 return "";
 
             if (type.IsValueType)
-                return Activator.CreateInstance(type, true); // ctor can be public or internal
+                return Activator.CreateInstance(type, true) ?? throw new Exception("Activator"); // ctor can be public or internal
 
             // reference types
             var ctors = type.DeclaredConstructors.Where(c => !c.IsStatic).ToList();

@@ -36,7 +36,7 @@ namespace Stringification.Tests
         }
         */
 
-        private static IEnumerable<Type> GetTypes(string assemblyPath)
+        private static IEnumerable<Type?> GetTypes(string assemblyPath)
         {
             var assembly = Assembly.LoadFrom(assemblyPath);
             try

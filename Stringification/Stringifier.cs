@@ -18,7 +18,7 @@ namespace Stringification
             if (!includeTypeName)
                 return result;
 
-            return $"{source.GetType().Name}: {result ?? "{}"}";
+            return $"{source.GetType().Name}: {(result == "" ? "{}" : result)}";
         }
 
         private static string Recurse(this object o)
@@ -31,7 +31,7 @@ namespace Stringification
                 case string s:
                     return $"\"{s}\"";
                 case ValueType v:
-                    return v.ToString();
+                    return v.ToString() ?? "";
                 case Type t:
                     return $"Type:\"{t.Name}\"";
                 case Exception e:
@@ -43,7 +43,7 @@ namespace Stringification
             var type = o.GetType().GetTypeInfo();
 
             if (type.IsStringEnum())
-                return o.ToString();
+                return o.ToString() ?? "";
 
             if (type.IsClass)
                 return o.StringifyClass();
@@ -60,17 +60,17 @@ namespace Stringification
                 .GroupBy(x => "")
                 .Select(list => string.Join(", ", list))
                 .Select(s => "[" + s + "]")
-                .SingleOrDefault();
+                .SingleOrDefault() ?? "";
 
         private static string StringifyClass(this object o) =>
             Utilities.GetNonDefaultProperties(o)
-                .Select(property => new { name = property.Name, value = property.GetValue(o).Recurse() })
+                .Select(property => new { name = property.Name, value = property.GetValue(o)!.Recurse() })
                 .Where(x => x.value != null)
                 .Select(x => $"{x.name}:{x.value}")
                 .GroupBy(x => "")
                 .Select(list => string.Join(", ", list))
                 .Select(s => "{" + s + "}")
-                .SingleOrDefault();
+                .SingleOrDefault() ?? "";
     }
 }
 

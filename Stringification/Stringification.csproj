@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>8.0</LangVersion>
+    <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/dshe/Stringification</PackageProjectUrl>
@@ -10,19 +9,21 @@
     <PackageTags>stringify stringifier stringification strings json</PackageTags>
     <Description>A simple utility which creates string representations of objects.</Description>
     <Authors>DavidS</Authors>
-    <Version>1.0.3</Version>
-    <AssemblyVersion>1.0.3</AssemblyVersion>
-    <FileVersion>1.0.3</FileVersion>
+    <Version>2.0.0-beta</Version>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+    <FileVersion>2.0.0</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/dshe/Stringification</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="worm64.png" Pack="true" PackagePath="\" />
-    <PackageReference Include="NodaTime" Version="3.0.3" />
-    <PackageReference Include="StringEnums" Version="1.30.1" />
-    <PackageReference Include="System.Reactive" Version="4.4.1" />
+    <PackageReference Include="NodaTime" Version="3.0.5" />
+    <PackageReference Include="StringEnums" Version="2.0.0-beta" />
+    <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

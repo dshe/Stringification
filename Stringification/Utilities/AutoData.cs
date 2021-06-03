@@ -105,7 +105,7 @@ namespace Stringification
                 var value1 = Create(genericTypes[0]);
                 var value2 = Create(genericTypes[1]);
                 var ctor = type.GetConstructor(genericTypes);
-                var result = ctor.Invoke(new[] { value1, value2 });
+                var result = ctor!.Invoke(new[] { value1, value2 });
                 return result;
             }
 
@@ -146,7 +146,7 @@ namespace Stringification
                             var fieldName = "<" + property.Name + ">";
                             type.DeclaredFields
                                 .Where(f => f.Name.StartsWith(fieldName))
-                                .SingleOrDefault()
+                                .Single()
                                 .SetValue(classInstance, value);
                         }
                     }

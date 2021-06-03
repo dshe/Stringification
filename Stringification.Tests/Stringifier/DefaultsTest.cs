@@ -21,7 +21,7 @@ namespace Stringification.Tests
         {
             var somethang = new Somethang();
 
-            Assert.Null(somethang.Stringify(includeTypeName: false));
+            Assert.Equal("", somethang.Stringify(includeTypeName: false));
 
             somethang.Some = SomeEnum.Yes;
             
