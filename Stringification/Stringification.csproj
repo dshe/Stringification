@@ -6,10 +6,10 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/dshe/Stringification</PackageProjectUrl>
     <PackageIcon>worm64.png</PackageIcon>
-    <PackageTags>stringify stringifier stringification strings json</PackageTags>
+    <PackageTags>stringify stringifier stringification strings json serialize</PackageTags>
     <Description>A simple utility which creates string representations of objects.</Description>
     <Authors>DavidS</Authors>
-    <Version>2.0.0-beta</Version>
+    <Version>2.0.0</Version>
     <AssemblyVersion>2.0.0</AssemblyVersion>
     <FileVersion>2.0.0</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -21,9 +21,8 @@
 
   <ItemGroup>
     <None Include="worm64.png" Pack="true" PackagePath="\" />
-    <PackageReference Include="NodaTime" Version="3.0.5" />
-    <PackageReference Include="StringEnums" Version="2.0.0-beta" />
-    <PackageReference Include="System.Reactive" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="StringEnums" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

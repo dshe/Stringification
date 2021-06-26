@@ -1,4 +1,6 @@
-﻿using StringEnums;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using StringEnums;
 using System;
 using System.Collections;
 using System.Linq;
@@ -6,71 +8,76 @@ using System.Reflection;
 
 namespace Stringification
 {
-    public static class Stringifier
+    public partial class Stringifier
     {
-        public static string Stringify(object source, bool includeTypeName = true)
+        private readonly ILogger Logger;
+        public Stringifier(ILogger logger) => Logger = logger;
+
+        public string Stringify(object source, bool nonDefaultProperties = true, bool includeTypeName = true)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
 
-            var result = Recurse(source);
+            string result = Recurse(source, nonDefaultProperties);
 
-            if (!includeTypeName)
-                return result;
+            if (includeTypeName)
+                result = $"{source.GetType().Name}: {(result == "" ? "{}" : result)}";
 
-            return $"{source.GetType().Name}: {(result == "" ? "{}" : result)}";
+            Logger.LogTrace($"Stringify({source.GetType().Name}) => {result}");
+
+            return result;
         }
 
-        private static string Recurse(this object o)
+        private string Recurse(object? o, bool nonDefaultProperties)
         {
-            if (o == null)
+            if (o is null)
                 return "";
 
-            switch (o)
+            string? str = o switch
             {
-                case string s:
-                    return $"\"{s}\"";
-                case ValueType v:
-                    return v.ToString() ?? "";
-                case Type t:
-                    return $"Type:\"{t.Name}\"";
-                case Exception e:
-                    return $"\"{e}\"";
-                case IEnumerable enumerable:
-                    return enumerable.StringifyEnumerable();
-            }
+                string s => $"\"{s}\"",
+                ValueType v => v.ToString() ?? "",
+                Type t => $"Type:\"{t.Name}\"",
+                Exception e => $"Exception:\"{e.Message}\"",
+                IEnumerable enumerable => StringifyEnumerable(enumerable, nonDefaultProperties),
+                _ => null
+            };
 
-            var type = o.GetType().GetTypeInfo();
+            if (str is not null)
+                return str;
+
+            TypeInfo type = o.GetType().GetTypeInfo();
 
             if (type.IsStringEnum())
                 return o.ToString() ?? "";
 
             if (type.IsClass)
-                return o.StringifyClass();
+                return StringifyClass(o, nonDefaultProperties);
 
             throw new Exception($"Unable to stringify type: {type.Name}.");
         }
 
-        private static string StringifyEnumerable(this IEnumerable enumerable) =>
+        private string StringifyEnumerable(IEnumerable enumerable, bool nonDefaultProperties) =>
             enumerable
                 .Cast<object>()
-                .Select(Recurse)
-                .Where(x => x != null)
+                .Select(x => Recurse(x, nonDefaultProperties))
+                .Where(x => !string.IsNullOrEmpty(x))
                 .Select(x => $"{string.Join(", ", x)}")
                 .GroupBy(x => "")
                 .Select(list => string.Join(", ", list))
                 .Select(s => "[" + s + "]")
                 .SingleOrDefault() ?? "";
 
-        private static string StringifyClass(this object o) =>
-            Utilities.GetNonDefaultProperties(o)
-                .Select(property => new { name = property.Name, value = property.GetValue(o)!.Recurse() })
-                .Where(x => x.value != null)
+        private string StringifyClass(object o, bool nonDefaultProperties)
+       {
+            return GetProperties(o, nonDefaultProperties)
+                .Select(property => new { name = property.Name, value = Recurse(property.GetValue(o), nonDefaultProperties) })
                 .Select(x => $"{x.name}:{x.value}")
                 .GroupBy(x => "")
                 .Select(list => string.Join(", ", list))
                 .Select(s => "{" + s + "}")
                 .SingleOrDefault() ?? "";
+        }
     }
 }
 

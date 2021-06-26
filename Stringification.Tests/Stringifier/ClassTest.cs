@@ -5,20 +5,10 @@ using Xunit.Abstractions;
 
 namespace Stringification.Tests
 {
-    public class ClassTests
+    public class ClassTests : TestBase
     {
-        protected readonly Action<string> Write;
-        public ClassTests(ITestOutputHelper output) => Write = output.WriteLine;
+        public ClassTests(ITestOutputHelper output) : base(output) { }
 
-        [Fact]
-        public void T03_Primitives()
-        {
-            const string str = "somestring";
-            Assert.Equal("\"" + str + "\"", str.Stringify(includeTypeName: false));
-            Assert.Equal("\"A\"", "A".Stringify(includeTypeName: false));
-            Assert.Equal("42", 42.Stringify(includeTypeName: false));
-            Assert.Equal(DateTime.Now.ToString(), DateTime.Now.Stringify(includeTypeName: false));
-        }
 
         public class Company
         {
@@ -26,7 +16,7 @@ namespace Stringification.Tests
         }
 
         [Fact]
-        public void T02_Empty_Class()
+        public void T03_Empty_Class()
         {
             var c = new Company();
             //Assert.Empty(c.Stringify(includeTypeName: false));

@@ -5,7 +5,7 @@ using Stringification;
 
 namespace Stringification.Tests
 {
-    public class AccessTests : BaseTest
+    public class AccessTests :  TestBase
     {
         internal class TestClass
         {
@@ -18,7 +18,7 @@ namespace Stringification.Tests
             internal string InternalField = "";
             private string privateField = "";
 
-            public string PublicProperty { get; } = "";
+            public string PublicProperty { get; set; } = "";
             internal string InternalProperty { get; } = "";
             private string PrivateProperty { get; } = "";
 #pragma warning restore 0414
@@ -26,19 +26,17 @@ namespace Stringification.Tests
             public TestClass() { }
         }
 
-        public AccessTests(ITestOutputHelper output): base(output) { }
+        public AccessTests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
         public void T01_Access_Default()
         {
-            var test = new TestClass();
+            TestClass test = new();
 
-            var result = test.Stringify();
-            if (result != null)
-                WriteLine(result);
+            Assert.Equal("TestClass: {}", test.Stringify());
 
-            Assert.Equal("TestClass: {}", result);
+            test.PublicProperty = "x";
+            Assert.Equal("TestClass: {PublicProperty:\"x\"}", test.Stringify());
         }
-
     }
 }

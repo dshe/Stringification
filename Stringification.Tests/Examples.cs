@@ -49,17 +49,16 @@ namespace Stringification.Tests
         [Fact]
         public void T01_Example()
         {
-            var company = new Company
+            Company company = new()
             {
                 Name = "Aco",
                 Id = 9,
                 Active = true,
                 Location = new Location("3 Ruey", Country.Macedonia, DateTime.Now),
-                People = new List<Person>() { new Person("Natalia", 18), new Person("Natasha", 42) }
+                People = new List<Person>() { new Person("Natalia", 24), new Person("Natasha", 42) }
             };
 
             Write(company.Stringify());
         }
     }
 }
-
