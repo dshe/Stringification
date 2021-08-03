@@ -12,11 +12,14 @@ namespace Stringification
     {
         private readonly ILogger Logger;
         public Stringifier(ILogger logger) => Logger = logger;
+        public Stringifier() => Logger =  NullLogger.Instance;
 
         public string Stringify(object source, bool nonDefaultProperties = true, bool includeTypeName = true)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
+
+            Logger.LogTrace($"Stringify: {source.GetType().Name}");
 
             string result = Recurse(source, nonDefaultProperties);
 
@@ -47,9 +50,13 @@ namespace Stringification
                 return str;
 
             TypeInfo type = o.GetType().GetTypeInfo();
+            if (type.IsGenericType)
+                return "";
 
             if (type.IsStringEnum())
                 return o.ToString() ?? "";
+
+            Logger.LogTrace($"class: {o.GetType().Name}");
 
             if (type.IsClass)
                 return StringifyClass(o, nonDefaultProperties);

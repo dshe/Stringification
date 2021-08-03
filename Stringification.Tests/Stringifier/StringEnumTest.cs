@@ -14,9 +14,9 @@ namespace Stringification.Tests
         public static Country Maroc { get; } = Create("M");
     }
 
-    public class TypeTests : TestBase
+    public class StringEnumTests : TestBase
     {
-        public TypeTests(ITestOutputHelper output) : base(output) { }
+        public StringEnumTests(ITestOutputHelper output) : base(output) { }
 
         public enum City {  Lima, Osaka, Lukasa }
 

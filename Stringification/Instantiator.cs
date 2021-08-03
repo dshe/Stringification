@@ -9,9 +9,9 @@ namespace Stringification
 {
     public partial class Stringifier
     {
-        internal T CreateInstance<T>() => (T)CreateInstance(typeof(T).GetTypeInfo());
+        public T CreateInstance<T>() => (T)CreateInstance(typeof(T).GetTypeInfo());
 
-        internal object CreateInstance(TypeInfo type)
+        public object CreateInstance(TypeInfo type)
         {
             if (type == typeof(string))
                 return "";
@@ -26,7 +26,7 @@ namespace Stringification
             ConstructorInfo? ctor = ctors.SingleOrDefault(c => !c.GetParameters().Any());
             if (ctor != null)
             {
-                Logger.LogInformation($"Creating instance of {type.Name} with parameterless constructor.");
+                Logger.LogTrace($"Creating instance of {type.Name} with parameterless constructor.");
                 return ctor.Invoke(null);
             }
 
@@ -34,15 +34,15 @@ namespace Stringification
             ctor = ctors.SingleOrDefault(c => c.GetParameters().All(p => p.HasDefaultValue));
             if (ctor != null) 
             {
-                Logger.LogInformation($"Creating instance of {type.Name} with all-default parameters constructor.");
+                Logger.LogTrace($"Creating instance of {type.Name} with all-default parameters constructor.");
                 return ctor.Invoke(ctor.GetParameters().Select(p => p.DefaultValue).ToArray());
             }
 
-            Logger.LogInformation($"Creating instance of {type.Name} using FormatterServices.");
+            Logger.LogTrace($"Creating instance of {type.Name} using FormatterServices.");
             object instance = FormatterServices.GetUninitializedObject(type);
 
             // try to initialize the object
-            PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance);
             foreach (var property in properties)
             {
                 TypeInfo propertyType = property.PropertyType.GetTypeInfo();
@@ -62,7 +62,7 @@ namespace Stringification
                     fieldInfo.SetValue(instance, propertyInstance);
                     continue;
                 }
-                Logger.LogInformation($"Unable to create instance of readonly property '{property.Name}'.");
+                Logger.LogDebug($"Unable to create instance of readonly property '{property.Name}'.");
             }
 
             return instance;
