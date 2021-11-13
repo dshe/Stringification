@@ -26,7 +26,7 @@ namespace Stringification
             ConstructorInfo? ctor = ctors.SingleOrDefault(c => !c.GetParameters().Any());
             if (ctor != null)
             {
-                Logger.LogTrace($"Creating instance of {type.Name} with parameterless constructor.");
+                Logger.LogTrace("Creating instance of {Name} with parameterless constructor.", type.Name);
                 return ctor.Invoke(null);
             }
 
@@ -34,16 +34,16 @@ namespace Stringification
             ctor = ctors.SingleOrDefault(c => c.GetParameters().All(p => p.HasDefaultValue));
             if (ctor != null) 
             {
-                Logger.LogTrace($"Creating instance of {type.Name} with all-default parameters constructor.");
+                Logger.LogTrace("Creating instance of {Name} with all-default parameters constructor.", type.Name);
                 return ctor.Invoke(ctor.GetParameters().Select(p => p.DefaultValue).ToArray());
             }
 
-            Logger.LogTrace($"Creating instance of {type.Name} using FormatterServices.");
+            Logger.LogTrace("Creating instance of {Name} using FormatterServices.", type.Name);
             object instance = FormatterServices.GetUninitializedObject(type);
 
             // try to initialize the object
             PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance);
-            foreach (var property in properties)
+            foreach (PropertyInfo property in properties)
             {
                 TypeInfo propertyType = property.PropertyType.GetTypeInfo();
                 object propertyInstance = CreateInstance(propertyType);
@@ -62,7 +62,7 @@ namespace Stringification
                     fieldInfo.SetValue(instance, propertyInstance);
                     continue;
                 }
-                Logger.LogDebug($"Unable to create instance of readonly property '{property.Name}'.");
+                Logger.LogDebug("Unable to create instance of readonly property '{Name}'.", property.Name);
             }
 
             return instance;

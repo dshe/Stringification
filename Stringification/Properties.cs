@@ -24,17 +24,12 @@ namespace Stringification
             }
         }
 
-        private PropertyInfo[] GetAllProperties(TypeInfo type) =>
-            GetInstanceAndProperties(type).properties;
-        private object GetInstance(TypeInfo type) =>
-            GetInstanceAndProperties(type).instance;
-
         private IEnumerable<PropertyInfo> GetProperties(object o, bool nonDefault)
         {
             if (o == null)
                 throw new ArgumentNullException(nameof(o));
 
-            var type = o.GetType().GetTypeInfo();
+            TypeInfo type = o.GetType().GetTypeInfo();
             (object instance, PropertyInfo[] properties) = GetInstanceAndProperties(type);
 
             if (!nonDefault)

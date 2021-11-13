@@ -1,47 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <Nullable>enable</Nullable>
     <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="~\AssemblyTest.cs" />
-    <Compile Remove="~\Conditions\ConditionsTest.cs" />
-    <Compile Remove="~\Conditions\ContractCondition.cs" />
-    <Compile Remove="~\Conditions\ExecutionCondition.cs" />
-    <Compile Remove="~\Conditions\MarginCondition.cs" />
-    <Compile Remove="~\Conditions\OperatorCondition.cs" />
-    <Compile Remove="~\Conditions\OrderCondition.cs" />
-    <Compile Remove="~\Conditions\OrderConditionType.cs" />
-    <Compile Remove="~\Conditions\PercentChangeCondition.cs" />
-    <Compile Remove="~\Conditions\PriceCondition.cs" />
-    <Compile Remove="~\Conditions\TimeCondition.cs" />
-    <Compile Remove="~\Conditions\TriggerMethod.cs" />
-    <Compile Remove="~\Conditions\VolumeCondition.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="~\AssemblyTest.cs" />
-    <None Include="~\Conditions\ConditionsTest.cs" />
-    <None Include="~\Conditions\ContractCondition.cs" />
-    <None Include="~\Conditions\ExecutionCondition.cs" />
-    <None Include="~\Conditions\MarginCondition.cs" />
-    <None Include="~\Conditions\OperatorCondition.cs" />
-    <None Include="~\Conditions\OrderCondition.cs" />
-    <None Include="~\Conditions\OrderConditionType.cs" />
-    <None Include="~\Conditions\PercentChangeCondition.cs" />
-    <None Include="~\Conditions\PriceCondition.cs" />
-    <None Include="~\Conditions\TimeCondition.cs" />
-    <None Include="~\Conditions\TriggerMethod.cs" />
-    <None Include="~\Conditions\VolumeCondition.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
-    <PackageReference Include="MXLogger" Version="1.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="MXLogger" Version="1.2.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
@@ -51,6 +19,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Stringification\Stringification.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="~\" />
   </ItemGroup>
 
 </Project>

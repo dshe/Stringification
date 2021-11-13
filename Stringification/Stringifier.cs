@@ -19,14 +19,14 @@ namespace Stringification
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
 
-            Logger.LogTrace($"Stringify: {source.GetType().Name}");
+            Logger.LogTrace("Stringify: {Name}", source.GetType().Name);
 
             string result = Recurse(source, nonDefaultProperties);
 
             if (includeTypeName)
                 result = $"{source.GetType().Name}: {(result == "" ? "{}" : result)}";
 
-            Logger.LogTrace($"Stringify({source.GetType().Name}) => {result}");
+            Logger.LogTrace("Stringify({Name}) => {Result}", source.GetType().Name, result);
 
             return result;
         }
@@ -56,7 +56,7 @@ namespace Stringification
             if (type.IsStringEnum())
                 return o.ToString() ?? "";
 
-            Logger.LogTrace($"class: {o.GetType().Name}");
+            Logger.LogTrace("class: {Name}", o.GetType().Name);
 
             if (type.IsClass)
                 return StringifyClass(o, nonDefaultProperties);
@@ -73,7 +73,7 @@ namespace Stringification
                 .GroupBy(x => "")
                 .Select(list => string.Join(", ", list))
                 .Select(s => "[" + s + "]")
-                .SingleOrDefault() ?? "";
+                .SingleOrDefault("");
 
         private string StringifyClass(object o, bool nonDefaultProperties)
        {
@@ -83,7 +83,7 @@ namespace Stringification
                 .GroupBy(x => "")
                 .Select(list => string.Join(", ", list))
                 .Select(s => "{" + s + "}")
-                .SingleOrDefault() ?? "";
+                .SingleOrDefault("");
         }
     }
 }
