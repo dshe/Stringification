@@ -3,8 +3,8 @@
 ***A simple utility which creates a json-like string representation of the non-default public propertiues of an object***
 - **.NET 6.0** library
 - simple and intuitive API
-- dependencies: StringEnums.
 - tested
+- dependencies: StringEnums
 
 ```csharp
 Company company = new()
