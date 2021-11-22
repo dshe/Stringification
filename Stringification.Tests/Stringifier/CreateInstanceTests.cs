@@ -7,75 +7,73 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
+namespace Stringification.Tests;
 
-namespace Stringification.Tests
+public class NoConstructor
 {
-    public class NoConstructor
+    public string P1 { get; }
+    private NoConstructor(Object o) => P1 = "data";
+}
+
+internal class BaseClass10
+{
+    /*
+    public int PropertyInBasei;
+    public string PropertyInBase;
+    public BaseClass10(int x, string s)
     {
-        public string P1 { get; }
-        private NoConstructor(Object o) => P1 = "data";
+        PropertyInBasei = x;
+        PropertyInBase = "init";
+    }
+    //public BaseClass10() 
+    //{
+    //    PropertyInBase = "init";
+    //}
+    public BaseClass10(long x = 1)
+    {
+        PropertyInBase = "init";
     }
 
-    internal class BaseClass10
+    public BaseClass10(int x)
     {
-        /*
-        public int PropertyInBasei;
-        public string PropertyInBase;
-        public BaseClass10(int x, string s)
-        {
-            PropertyInBasei = x;
-            PropertyInBase = "init";
-        }
-        //public BaseClass10() 
-        //{
-        //    PropertyInBase = "init";
-        //}
-        public BaseClass10(long x = 1)
-        {
-            PropertyInBase = "init";
-        }
-
-        public BaseClass10(int x)
-        {
-            PropertyInBasei = x;
-            PropertyInBase = "init";
-        }
-        */
-
+        PropertyInBasei = x;
+        PropertyInBase = "init";
     }
+    */
 
-    internal class TestClass10 //: BaseClass10
-    {
-        public int Property { get; init; }
-        //public TestClass10() { }
-    }
+}
+
+internal class TestClass10 //: BaseClass10
+{
+    public int Property { get; init; }
+    //public TestClass10() { }
+}
 
 
-    public class CreateInstanceTests : TestBase
-    {
-        public CreateInstanceTests(ITestOutputHelper output) : base(output) { }
+public class CreateInstanceTests : TestBase
+{
+    public CreateInstanceTests(ITestOutputHelper output) : base(output) { }
 
     [Fact]
-        public void T01_Create_Instance()
+    public void T01_Create_Instance()
+    {
+        var test = new TestClass1()
         {
-            var test = new TestClass1()
-            {
-                //PropertyInBase = 1,
-                Property = 2
-            };
+            //PropertyInBase = 1,
+            Property = 2
+        };
 
-            var result = test.Stringify();
+        var result = test.Stringify();
 
-            //Assert.Equal("TestClass1: {PropertyInBase:1, Property:2}", result);
+        //Assert.Equal("TestClass1: {PropertyInBase:1, Property:2}", result);
 
-           // if (result != null)
-            //    WriteLine(result);
+        // if (result != null)
+        //    WriteLine(result);
 
-            var xxx = new BaseClass10();
+        var xxx = new BaseClass10();
 
-            //var xx = Utilities.CreateInstance<BaseClass10>();
-            var xx = Stringifier.CreateInstance<NoConstructor>();
-            Write(xx.Stringify());
-        }
+        //var xx = Utilities.CreateInstance<BaseClass10>();
+        var xx = Stringifier.CreateInstance<NoConstructor>();
+        Write(xx.Stringify());
     }
 }
