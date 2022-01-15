@@ -24,7 +24,8 @@ public partial class Stringifier
         ConstructorInfo? ctor = ctors.SingleOrDefault(c => !c.GetParameters().Any());
         if (ctor != null)
         {
-            Logger.LogTrace("Creating instance of {Name} with parameterless constructor.", type.Name);
+            if (Logger.IsEnabled(LogLevel.Trace))
+                Logger.LogTrace("Creating instance of {Name} with parameterless constructor.", type.Name);
             return ctor.Invoke(null);
         }
 
@@ -32,11 +33,13 @@ public partial class Stringifier
         ctor = ctors.SingleOrDefault(c => c.GetParameters().All(p => p.HasDefaultValue));
         if (ctor != null)
         {
-            Logger.LogTrace("Creating instance of {Name} with all-default parameters constructor.", type.Name);
+            if (Logger.IsEnabled(LogLevel.Trace))
+                Logger.LogTrace("Creating instance of {Name} with all-default parameters constructor.", type.Name);
             return ctor.Invoke(ctor.GetParameters().Select(p => p.DefaultValue).ToArray());
         }
 
-        Logger.LogTrace("Creating instance of {Name} using FormatterServices.", type.Name);
+        if (Logger.IsEnabled(LogLevel.Trace))
+            Logger.LogTrace("Creating instance of {Name} using FormatterServices.", type.Name);
         object instance = FormatterServices.GetUninitializedObject(type);
 
         // try to initialize the object
@@ -60,7 +63,9 @@ public partial class Stringifier
                 fieldInfo.SetValue(instance, propertyInstance);
                 continue;
             }
-            Logger.LogDebug("Unable to create instance of readonly property '{Name}'.", property.Name);
+
+            if (Logger.IsEnabled(LogLevel.Warning))
+                Logger.LogWarning("Unable to create instance of readonly property '{Name}'.", property.Name);
         }
 
         return instance;

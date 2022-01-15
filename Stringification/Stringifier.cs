@@ -8,22 +8,25 @@ namespace Stringification;
 
 public partial class Stringifier
 {
-    private readonly ILogger Logger;
+    private ILogger Logger { get; }
     public Stringifier(ILogger logger) => Logger = logger;
     public Stringifier() => Logger = NullLogger.Instance;
+    public static Stringifier Instance { get; } = new();
 
     public string Stringify(object source, bool nonDefaultProperties = true, bool includeTypeName = true)
     {
         ArgumentNullException.ThrowIfNull(source);
 
-        Logger.LogTrace("Stringify: {Name}", source.GetType().Name);
+        if (Logger.IsEnabled(LogLevel.Trace))
+            Logger.LogTrace("Stringify: {Name}", source.GetType().Name);
 
         string result = Recurse(source, nonDefaultProperties);
 
         if (includeTypeName)
             result = $"{source.GetType().Name}: {(result.Length == 0 ? "{}" : result)}";
 
-        Logger.LogTrace("Stringify({Name}) => {Result}", source.GetType().Name, result);
+        if (Logger.IsEnabled(LogLevel.Trace))
+            Logger.LogTrace("Stringify({Name}) => {Result}", source.GetType().Name, result);
 
         return result;
     }
@@ -53,7 +56,8 @@ public partial class Stringifier
         if (type.IsStringEnum())
             return o.ToString() ?? "";
 
-        Logger.LogTrace("class: {Name}", o.GetType().Name);
+        if (Logger.IsEnabled(LogLevel.Trace))
+            Logger.LogTrace("class: {Name}", o.GetType().Name);
 
         if (type.IsClass)
             return StringifyClass(o, nonDefaultProperties);
