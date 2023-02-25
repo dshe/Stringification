@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using StringEnums;
 using System.Collections;
-using System.Linq;
 using System.Reflection;
+
 namespace Stringification;
 
 public partial class Stringifier
@@ -17,16 +17,14 @@ public partial class Stringifier
     {
         ArgumentNullException.ThrowIfNull(source);
 
-        if (Logger.IsEnabled(LogLevel.Trace))
-            Logger.LogTrace("Stringify: {Name}", source.GetType().Name);
+        Logger.LogTrace("Stringify: {Name}", source.GetType().Name);
 
         string result = Recurse(source, nonDefaultProperties);
 
         if (includeTypeName)
             result = $"{source.GetType().Name}: {(result.Length == 0 ? "{}" : result)}";
 
-        if (Logger.IsEnabled(LogLevel.Trace))
-            Logger.LogTrace("Stringify({Name}) => {Result}", source.GetType().Name, result);
+        Logger.LogTrace("Stringify({Name}) => {Result}", source.GetType().Name, result);
 
         return result;
     }
@@ -56,8 +54,7 @@ public partial class Stringifier
         if (type.IsStringEnum())
             return o.ToString() ?? "";
 
-        if (Logger.IsEnabled(LogLevel.Trace))
-            Logger.LogTrace("class: {Name}", o.GetType().Name);
+        Logger.LogTrace("class: {Name}", o.GetType().Name);
 
         if (type.IsClass)
             return StringifyClass(o, nonDefaultProperties);

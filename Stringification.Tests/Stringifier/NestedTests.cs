@@ -1,6 +1,4 @@
-﻿using Xunit;
-using Xunit.Abstractions;
-namespace Stringification.Tests;
+﻿namespace Stringification.Tests;
 
 public sealed class Nested1
 {

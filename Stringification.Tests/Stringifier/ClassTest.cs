@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xunit;
-using Xunit.Abstractions;
-namespace Stringification.Tests;
+﻿namespace Stringification.Tests;
 
 public class ClassTests : TestBase
 {

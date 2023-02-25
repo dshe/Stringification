@@ -1,13 +1,10 @@
-﻿using Xunit;
-using Xunit.Abstractions;
-using Stringification;
-namespace Stringification.Tests;
+﻿namespace Stringification.Tests;
 
 public class AccessTests : TestBase
 {
     internal class TestClass
     {
-#pragma warning disable 414
+#pragma warning disable CS0414
         public readonly string PublicReadonlyField = "";
         internal readonly string InternalReadonlyField = "";
         private readonly string privateReadonlyField = "";
@@ -19,7 +16,7 @@ public class AccessTests : TestBase
         public string PublicProperty { get; set; } = "";
         internal string InternalProperty { get; } = "";
         private string PrivateProperty { get; } = "";
-#pragma warning restore 0414
+#pragma warning restore CS0414
 
         public TestClass() { }
     }

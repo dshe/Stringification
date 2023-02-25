@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+
 namespace Stringification;
 
 public partial class Stringifier
@@ -24,8 +23,7 @@ public partial class Stringifier
         ConstructorInfo? ctor = ctors.SingleOrDefault(c => !c.GetParameters().Any());
         if (ctor != null)
         {
-            if (Logger.IsEnabled(LogLevel.Trace))
-                Logger.LogTrace("Creating instance of {Name} with parameterless constructor.", type.Name);
+            Logger.LogTrace("Creating instance of {Name} with parameterless constructor.", type.Name);
             return ctor.Invoke(null);
         }
 
@@ -33,13 +31,11 @@ public partial class Stringifier
         ctor = ctors.SingleOrDefault(c => c.GetParameters().All(p => p.HasDefaultValue));
         if (ctor != null)
         {
-            if (Logger.IsEnabled(LogLevel.Trace))
-                Logger.LogTrace("Creating instance of {Name} with all-default parameters constructor.", type.Name);
+            Logger.LogTrace("Creating instance of {Name} with all-default parameters constructor.", type.Name);
             return ctor.Invoke(ctor.GetParameters().Select(p => p.DefaultValue).ToArray());
         }
 
-        if (Logger.IsEnabled(LogLevel.Trace))
-            Logger.LogTrace("Creating instance of {Name} using FormatterServices.", type.Name);
+        Logger.LogTrace("Creating instance of {Name} using FormatterServices.", type.Name);
         object instance = FormatterServices.GetUninitializedObject(type);
 
         // try to initialize the object
@@ -64,8 +60,7 @@ public partial class Stringifier
                 continue;
             }
 
-            if (Logger.IsEnabled(LogLevel.Warning))
-                Logger.LogWarning("Unable to create instance of readonly property '{Name}'.", property.Name);
+            Logger.LogWarning("Unable to create instance of readonly property '{Name}'.", property.Name);
         }
 
         return instance;

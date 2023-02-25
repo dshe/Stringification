@@ -1,12 +1,5 @@
-﻿using System;
-using Xunit;
-using Xunit.Abstractions;
-using Stringification;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Reflection;
+
 namespace Stringification.Tests;
 
 internal class BaseClass1

@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xunit;
-using Xunit.Abstractions;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.IO;
-using System.Linq;
-
-namespace Stringification.Tests;
+﻿namespace Stringification.Tests;
 
 public class StringifyExamples
 {

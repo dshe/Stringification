@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
-using Xunit.Abstractions;
+﻿using Microsoft.Extensions.Logging;
+
 namespace Stringification.Tests;
 
 public abstract class TestBase
@@ -13,8 +12,9 @@ public abstract class TestBase
     {
         Write = output.WriteLine;
 
-        Logger = new LoggerFactory()
-            .AddMXLogger(Write)
+        Logger = LoggerFactory
+            .Create(builder =>
+                builder.AddMXLogger(Write))
             .CreateLogger("Test");
 
         Stringifier = new Stringifier(Logger);

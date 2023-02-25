@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-namespace Stringification;
+﻿namespace Stringification;
 
-public static partial class Xtensions
+public static class Xtensions
 {
     public static string Stringify(this object obj, bool nonDefaultProperties = true, bool includeTypeName = true) =>
         Stringifier.Instance.Stringify(obj, nonDefaultProperties, includeTypeName);

@@ -1,5 +1,4 @@
-﻿using Xunit;
-namespace Stringification.Tests;
+﻿namespace Stringification.Tests;
 
 public class DefaultsTest
 {
