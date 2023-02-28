@@ -33,14 +33,23 @@ public partial class Stringifier
 
         return properties
             .Select(p => (p, p.GetValue(o), p.GetValue(instance)))
-            .Where(pvv => !DeepEquals(pvv.Item2, pvv.Item3))
+            .Where(pvv => !DeepEquals(pvv.p, pvv.Item2, pvv.Item3))
             .Select(pvv => pvv.p);
     }
 
-    private bool DeepEquals<T>(T instance1, T instance2)
+    private bool DeepEquals(PropertyInfo pi, object? instance1, object? instance2)
     {
+        if (pi.PropertyType == typeof(string))
+        {
+            var x1 = (string?)instance1;
+            var x2 = (string?)instance2;
+            return (x1 == x2 || (string.IsNullOrEmpty(x1) && string.IsNullOrEmpty(x2)));
+        }   
+
         string s1 = Recurse(instance1, false);
         string s2 = Recurse(instance2, false);
+
+        ;
         return s1 == s2;
     }
 }

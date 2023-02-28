@@ -1,4 +1,6 @@
-﻿namespace Stringification.Tests;
+﻿using System.Net.Cache;
+
+namespace Stringification.Tests;
 
 public class StringifyExamples
 {
@@ -6,7 +8,7 @@ public class StringifyExamples
 
     public class Person
     {
-        public string Name { get; }
+        public string Name { get; } = "";
         public int Age { get; }
         public Person(string name, int age)
         {
@@ -71,5 +73,27 @@ public class StringifyExamples
         var str = company.Stringify();
         Write(str);
     }
+
+    public class TestClass
+    {
+        public string SomeString { get; } = "";
+        internal TestClass()
+        {
+        }
+        public TestClass(string ss)
+        {
+            //SomeString = ss;
+        }
+    }
+
+    [Fact]
+    public void T03_Example()
+    {
+        var s = new TestClass("abc");
+        var str = s.Stringify();
+        Assert.Equal("TestClass: {}", str);
+        Write(str);
+    }
+
 
 }
