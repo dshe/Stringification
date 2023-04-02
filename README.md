@@ -3,7 +3,7 @@
 - **.NET 6.0** library
 - simple and intuitive API
 - tested
-- dependencies: StringEnums
+- dependencies: none
 
 ```csharp
 Company company = new()
