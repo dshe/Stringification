@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using StringEnums;
 using System.Collections;
 using System.Reflection;
 
@@ -10,7 +9,7 @@ public partial class Stringifier
 {
     private ILogger Logger { get; }
     public Stringifier(ILogger logger) => Logger = logger;
-    public Stringifier() => Logger = NullLogger.Instance;
+    private Stringifier() => Logger = NullLogger.Instance;
     public static Stringifier Instance { get; } = new();
 
     public string Stringify(object source, bool nonDefaultProperties = true, bool includeTypeName = true)
@@ -50,9 +49,6 @@ public partial class Stringifier
         TypeInfo type = o.GetType().GetTypeInfo();
         if (type.IsGenericType)
             return "";
-
-        if (type.IsStringEnum())
-            return o.ToString() ?? "";
 
         Logger.LogTrace("class: {Name}", o.GetType().Name);
 

@@ -49,7 +49,6 @@ public partial class Stringifier
         string s1 = Recurse(instance1, false);
         string s2 = Recurse(instance2, false);
 
-        ;
         return s1 == s2;
     }
 }

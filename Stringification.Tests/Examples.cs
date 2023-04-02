@@ -1,6 +1,4 @@
-﻿using System.Net.Cache;
-
-namespace Stringification.Tests;
+﻿namespace Stringification.Tests;
 
 public class StringifyExamples
 {
@@ -94,6 +92,4 @@ public class StringifyExamples
         Assert.Equal("TestClass: {}", str);
         Write(str);
     }
-
-
 }
