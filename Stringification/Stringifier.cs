@@ -7,10 +7,10 @@ namespace Stringification;
 
 public partial class Stringifier
 {
+    public static Stringifier Instance { get; } = new(NullLoggerFactory.Instance);
     private ILogger Logger { get; }
     public Stringifier(ILogger logger) => Logger = logger;
-    private Stringifier() => Logger = NullLogger.Instance;
-    public static Stringifier Instance { get; } = new();
+    public Stringifier(ILoggerFactory loggerFactory) => Logger = loggerFactory.CreateLogger<Stringifier>();
 
     public string Stringify(object source, bool nonDefaultProperties = true, bool includeTypeName = true)
     {
