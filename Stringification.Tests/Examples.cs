@@ -1,31 +1,20 @@
 ﻿namespace Stringification.Tests;
 
-public class StringifyExamples
+public class StringifyExamples(ITestOutputHelper output)
 {
     public enum Country { Macau, Macedonia, Malawi }
 
-    public class Person
+    public class Person(string name, int age)
     {
-        public string Name { get; } = "";
-        public int Age { get; }
-        public Person(string name, int age)
-        {
-            Name = name;
-            Age = age;
-        }
+        public string Name { get; } = name;
+        public int Age { get; } = age;
     }
 
-    public class Location
+    public class Location(string? address, StringifyExamples.Country country, DateTime updated)
     {
-        public string? Address { get; set; }
-        public Country Country { get; set; }
-        public DateTime Updated { get; set; }
-        public Location(string? address, Country country, DateTime updated)
-        {
-            Address = address;
-            Country = country;
-            Updated = updated;
-        }
+        public string? Address { get; set; } = address;
+        public Country Country { get; set; } = country;
+        public DateTime Updated { get; set; } = updated;
     }
 
     public class Company
@@ -38,8 +27,7 @@ public class StringifyExamples
         public IEnumerable<Person>? People { get; set; }
     }
 
-    protected readonly Action<string> Write;
-    public StringifyExamples(ITestOutputHelper output) => Write = output.WriteLine;
+    protected readonly Action<string> Write = output.WriteLine;
 
     [Fact]
     public void T01_Example()
@@ -50,7 +38,7 @@ public class StringifyExamples
             Id = 0,
             Active = true,
             Location = new Location("3 Ruey", Country.Macedonia, DateTime.Now),
-            People = new List<Person>() { new Person("Natalia", 24), new Person("Natasha", 42) }
+            People = [new Person("Natalia", 24), new Person("Natasha", 42)]
         };
 
         Write(company.Stringify());
@@ -65,7 +53,7 @@ public class StringifyExamples
             Id = 9,
             Active = false,
             Location = new Location("3 Ruey", Country.Macedonia, DateTime.Now),
-            People = new List<Person>() { new Person("Natalia", 24), new Person("Natasha", 42) }
+            People = [new Person("Natalia", 24), new Person("Natasha", 42)]
         };
 
         var str = company.Stringify();

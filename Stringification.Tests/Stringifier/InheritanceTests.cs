@@ -17,10 +17,8 @@ internal class TestClass1 : BaseClass1
 }
 
 
-public class InheritanceTests : TestBase
+public class InheritanceTests(ITestOutputHelper output) : TestBase(output)
 {
-    public InheritanceTests(ITestOutputHelper output) : base(output) { }
-
     [Fact]
     public void T01_Access_Default()
     {
@@ -39,7 +37,5 @@ public class InheritanceTests : TestBase
 
         var xx = Stringifier.CreateInstance(typeof(BaseClass1).GetTypeInfo());
         ;
-
-
     }
 }

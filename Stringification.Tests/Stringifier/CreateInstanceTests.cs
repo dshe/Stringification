@@ -41,10 +41,8 @@ internal class TestClass10 //: BaseClass10
 }
 
 
-public class CreateInstanceTests : TestBase
+public class CreateInstanceTests(ITestOutputHelper output) : TestBase(output)
 {
-    public CreateInstanceTests(ITestOutputHelper output) : base(output) { }
-
     [Fact]
     public void T01_Create_Instance()
     {

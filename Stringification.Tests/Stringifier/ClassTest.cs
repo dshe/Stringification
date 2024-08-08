@@ -1,10 +1,7 @@
 ﻿namespace Stringification.Tests;
 
-public class ClassTests : TestBase
+public class ClassTests(ITestOutputHelper output) : TestBase(output)
 {
-    public ClassTests(ITestOutputHelper output) : base(output) { }
-
-
     public class Company
     {
         public string Name { get; set; } = "";

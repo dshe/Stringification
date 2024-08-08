@@ -4,7 +4,7 @@ namespace Stringification;
 
 public partial class Stringifier
 {
-    private static readonly Dictionary<TypeInfo, (object instance, PropertyInfo[] properties)> Cache = new();
+    private static readonly Dictionary<TypeInfo, (object instance, PropertyInfo[] properties)> Cache = [];
     private (object instance, PropertyInfo[] properties) GetInstanceAndProperties(TypeInfo type)
     {
         lock (Cache)
@@ -13,8 +13,7 @@ public partial class Stringifier
             {
                 // create an instance of the type to find it's default properties
                 item.instance = CreateInstance(type);
-                item.properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .OrderBy(p => p.MetadataToken).ToArray();
+                item.properties = [.. type.GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => p.MetadataToken)];
                 Cache.Add(type, item);
             }
             return item;

@@ -1,6 +1,6 @@
 ﻿namespace Stringification.Tests;
 
-public class AccessTests : TestBase
+public class AccessTests(ITestOutputHelper output) : TestBase(output)
 {
     internal class TestClass
     {
@@ -20,8 +20,6 @@ public class AccessTests : TestBase
 
         public TestClass() { }
     }
-
-    public AccessTests(ITestOutputHelper output) : base(output) { }
 
     [Fact]
     public void T01_Access_Default()

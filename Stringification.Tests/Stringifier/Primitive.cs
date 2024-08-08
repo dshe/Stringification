@@ -1,9 +1,7 @@
 ﻿namespace Stringification.Tests;
 
-public class PrimitiveTests : TestBase
+public class PrimitiveTests(ITestOutputHelper output) : TestBase(output)
 {
-    public PrimitiveTests(ITestOutputHelper output) : base(output) { }
-
     [Fact]
     public void T01_String()
     {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
 namespace Stringification;
@@ -20,7 +21,7 @@ public partial class Stringifier
         List<ConstructorInfo> ctors = type.DeclaredConstructors.Where(c => !c.IsStatic).ToList();
 
         // try ctor taking no arguments
-        ConstructorInfo? ctor = ctors.SingleOrDefault(c => !c.GetParameters().Any());
+        ConstructorInfo? ctor = ctors.SingleOrDefault(c => c.GetParameters().Length == 0);
         if (ctor != null)
         {
             Logger.LogTrace("Creating instance of {Name} with parameterless constructor.", type.Name);
@@ -36,7 +37,7 @@ public partial class Stringifier
         }
 
         Logger.LogTrace("Creating instance of {Name} using FormatterServices.", type.Name);
-        object instance = FormatterServices.GetUninitializedObject(type);
+        object instance = RuntimeHelpers.GetUninitializedObject(type);
 
         // try to initialize the object
         PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance);
@@ -66,5 +67,3 @@ public partial class Stringifier
         return instance;
     }
 }
-
-

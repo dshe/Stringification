@@ -8,20 +8,15 @@ public sealed class Nested1
     }
 }
 
-public sealed class ClassX
+#pragma warning disable CS9113
+public sealed class ClassX(string ss)
 {
-    public Nested1 Nested1 { get; private set; }
-    //public int Property2 { get; init; }
-    public ClassX(string ss)
-    {
-        Nested1 = new Nested1();
-    }
+    public Nested1 Nested1 { get; private set; } = new Nested1();
 }
+#pragma warning restore CS9113
 
-public class EmptyTests : TestBase
+public class EmptyTests(ITestOutputHelper output) : TestBase(output)
 {
-    public EmptyTests(ITestOutputHelper output) : base(output) { }
-
     [Fact]
     public void T01_Empty_Default()
     {
