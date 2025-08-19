@@ -7,11 +7,11 @@
     <PackageProjectUrl>https://github.com/dshe/Stringification</PackageProjectUrl>
     <PackageIcon>worm64.png</PackageIcon>
     <PackageTags>stringify stringifier stringification strings json serialize</PackageTags>
-    <Description>A simple utility which creates string representations of objects.</Description>
+    <Description>A simple utility which creates string representations of objects</Description>
     <Authors>DavidS</Authors>
-    <Version>4.0.1</Version>
-    <AssemblyVersion>4.0.1</AssemblyVersion>
-    <FileVersion>4.0.1</FileVersion>
+    <Version>4.0.2</Version>
+    <AssemblyVersion>4.0.2</AssemblyVersion>
+    <FileVersion>4.0.2</FileVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/dshe/Stringification</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <None Include="worm64.png" Pack="true" PackagePath="\" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
   </ItemGroup>
 
 </Project>
