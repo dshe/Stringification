@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-7755BB.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ***A simple utility which creates a json-like string representation of the non-default public properties of an object***
-- **.NET 8.0** library
+- **.NET 10.0** library
 - simple and intuitive API
 - tested
 - dependencies: none
