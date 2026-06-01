@@ -1,4 +1,6 @@
-﻿namespace Stringification.Tests;
+﻿using System.Globalization;
+using NodaTime;
+namespace Stringification.Tests;
 
 public class PrimitiveTests(ITestOutputHelper output) : TestBase(output)
 {
@@ -21,7 +23,17 @@ public class PrimitiveTests(ITestOutputHelper output) : TestBase(output)
     [Fact]
     public void T03_Date()
     {
-        Assert.Equal(DateTime.Now.ToString(), Stringifier.Stringify(DateTime.Now, includeTypeName: false));
+        DateTime dt = DateTime.Now;
+        string str = $"\"{dt:O}\"";
+        Assert.Equal(str, Stringifier.Stringify(dt, includeTypeName: false));
+    }
+
+    [Fact]
+    public void T03_NodeTime()
+    {
+        Instant instant = SystemClock.Instance.GetCurrentInstant();
+        string str = instant.ToString();
+        Assert.Equal(str, Stringifier.Stringify(instant, includeTypeName: false));
     }
 
     [Fact]

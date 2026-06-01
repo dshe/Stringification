@@ -38,7 +38,7 @@ public partial class Stringifier
         object instance = RuntimeHelpers.GetUninitializedObject(type);
 
         // try to initialize the object
-        PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance);
+        PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
         foreach (PropertyInfo property in properties)
         {
             TypeInfo propertyType = property.PropertyType.GetTypeInfo();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Collections;
+using System.Globalization;
 using System.Reflection;
 namespace Stringification;
 
@@ -32,10 +33,18 @@ public partial class Stringifier
         if (o is null)
             return "";
 
+        if (o is DateTime dt)
+            return $"\"{dt:O}\"";
+
+        if (o is DateTimeOffset dto)
+            return $"\"{dto:O}\"";
+
+        if (o is ValueType)
+            return Convert.ToString(o, CultureInfo.InvariantCulture) ?? "";
+
         string? str = o switch
         {
             string s => $"\"{s}\"",
-            ValueType v => v.ToString() ?? "",
             Type t => $"Type:\"{t.Name}\"",
             Exception e => $"Exception:\"{e.Message}\"",
             IEnumerable enumerable => StringifyEnumerable(enumerable, nonDefaultProperties),
@@ -45,38 +54,35 @@ public partial class Stringifier
         if (str is not null)
             return str;
 
-        TypeInfo type = o.GetType().GetTypeInfo();
-        if (type.IsGenericType)
-            return "";
-
         Logger.LogTrace("class: {Name}", o.GetType().Name);
 
+        TypeInfo type = o.GetType().GetTypeInfo();
         if (type.IsClass)
             return StringifyClass(o, nonDefaultProperties);
 
         throw new InvalidOperationException($"Unable to stringify type: {type.Name}.");
     }
 
-    private string StringifyEnumerable(IEnumerable enumerable, bool nonDefaultProperties) =>
-        enumerable
+    private string StringifyEnumerable(IEnumerable enumerable, bool nonDefaultProperties)
+    {
+        var items = enumerable
             .Cast<object>()
             .Select(x => Recurse(x, nonDefaultProperties))
-            .Where(x => !string.IsNullOrEmpty(x))
-            .Select(x => $"{string.Join(", ", x)}")
-            .GroupBy(x => "")
-            .Select(list => string.Join(", ", list))
-            .Select(s => "[" + s + "]")
-            .SingleOrDefault("");
+            .Where(x => !string.IsNullOrEmpty(x));
+        return "[" + string.Join(", ", items) + "]";
+    }
 
     private string StringifyClass(object o, bool nonDefaultProperties)
     {
-        return GetProperties(o, nonDefaultProperties)
-            .Select(property => new { name = property.Name, value = Recurse(property.GetValue(o), nonDefaultProperties) })
-            .Select(x => $"{x.name}:{x.value}")
-            .GroupBy(x => "")
-            .Select(list => string.Join(", ", list))
-            .Select(s => "{" + s + "}")
-            .SingleOrDefault("");
+        var items = GetProperties(o, nonDefaultProperties)
+            .Select(property => $"{property.Name}:{Recurse(property.GetValue(o), nonDefaultProperties)}")
+            .ToList();
+
+        if (!items.Any())
+            return "";
+
+        return "{" + string.Join(", ", items) + "}";
     }
+
 }
 
