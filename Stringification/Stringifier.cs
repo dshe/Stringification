@@ -78,7 +78,7 @@ public partial class Stringifier
             .Select(property => $"{property.Name}:{Recurse(property.GetValue(o), nonDefaultProperties)}")
             .ToList();
 
-        if (!items.Any())
+        if (items.Count == 0)
             return "";
 
         return "{" + string.Join(", ", items) + "}";

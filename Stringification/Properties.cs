@@ -6,19 +6,19 @@ namespace Stringification;
 
 public partial class Stringifier
 {
-    private static readonly Dictionary<TypeInfo, (object instance, PropertyInfo[] properties)> Cache = new();
+    private static readonly Dictionary<TypeInfo, (object instance, PropertyInfo[] properties)> _cache = [];
     private (object instance, PropertyInfo[] properties) GetInstanceAndProperties(TypeInfo type)
     {
-        lock (Cache)
+        lock (_cache)
         {
-            if (!Cache.TryGetValue(type, out var item))
+            if (!_cache.TryGetValue(type, out var item))
             {
                 // create an instance of the type to find it's default properties
                 item.instance = CreateInstance(type);
                 item.properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                     .OrderBy(p => p.MetadataToken)
                     .ToArray();
-                Cache.Add(type, item);
+                _cache.Add(type, item);
             }
             return item;
         }
@@ -55,12 +55,13 @@ public partial class Stringifier
         return s1 == s2;
     }
 
-    private object? GetPropertyValueSafe(PropertyInfo p, object? instance)
+    private static object? GetPropertyValueSafe(PropertyInfo p, object? instance)
     {
         try
         {
             return p.GetValue(instance);
         }
+#pragma warning disable CA1031
         catch
         {
             // If getter throws for the default instance, treat as null so comparison can continue safely
