@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Collections;
 using System.Reflection;
-
 namespace Stringification;
 
 public partial class Stringifier

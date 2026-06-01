@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-
 namespace Stringification.Tests;
 
 internal class BaseClass1

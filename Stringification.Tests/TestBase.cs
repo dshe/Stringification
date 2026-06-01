@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-
 namespace Stringification.Tests;
 
 public abstract class TestBase
@@ -13,8 +12,7 @@ public abstract class TestBase
     {
         Write = output.WriteLine;
 
-        LogFactory = LoggerFactory
-            .Create(builder => builder.AddMXLogger(Write));
+        LogFactory = LoggerFactory.Create(builder => builder.AddMXLogger(Write));
 
         Logger = LogFactory.CreateLogger("Test");
 

@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-
 namespace Stringification;
 
 public partial class Stringifier
