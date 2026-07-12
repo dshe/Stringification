@@ -65,7 +65,7 @@ public partial class Stringifier
 
     private string StringifyEnumerable(IEnumerable enumerable, bool nonDefaultProperties)
     {
-        var items = enumerable
+        IEnumerable<string> items = enumerable
             .Cast<object>()
             .Select(x => Recurse(x, nonDefaultProperties))
             .Where(x => !string.IsNullOrEmpty(x));
@@ -74,7 +74,7 @@ public partial class Stringifier
 
     private string StringifyClass(object o, bool nonDefaultProperties)
     {
-        var items = GetProperties(o, nonDefaultProperties)
+        List<string> items = GetProperties(o, nonDefaultProperties)
             .Select(property => $"{property.Name}:{Recurse(property.GetValue(o), nonDefaultProperties)}")
             .ToList();
 
